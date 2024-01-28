@@ -1,0 +1,31 @@
+#Set a static IP address 
+Get-NetIPInterface 
+New-NetIPaddress -InterfaceIndex 12 -IPAddress 192.0.2.2 -PrefixLength 24 -DefaultGateway 192.0.2.1 
+Set-DNSClientServerAddress –InterfaceIndex 12 -ServerAddresses 192.0.2.4,192.0.2.5 
+
+#Join a Domain 
+net localgroup administrators /add <DomainName>\<UserName> 
+
+#Rename Computer Name 
+Rename-Computer -ComputerName <new_name> 
+
+#Turn off windows firewall for all profiles 
+netsh advfirewall set allprofiles state off 
+
+#Disable IPv6 
+Disable-NetAdapterBinding -Name "Ethernet0" -ComponentID ms_tcpip6 
+
+#Disable IPv6 for all interfaces 
+Disable-NetAdapterBinding -Name "*" -ComponentID ms_tcpip6. 
+
+#Enter the command below to enable RDP PowerShell: 
+Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server' -name "fDenyTSConnections" -value 0 
+
+#PFX Cert Installation 
+$mypwd = Get-Credential -UserName 'Enter password below' -Message 'Enter password below' 
+$params = @{ 
+    FilePath = 'C:\inetpub\star.tavana.net.pfx' 
+    CertStoreLocation = 'Cert:\LocalMachine\My' 
+    Password = $mypwd.Password 
+} 
+Import-PfxCertificate @params 
