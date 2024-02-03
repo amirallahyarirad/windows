@@ -24,7 +24,7 @@ Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server' 
 #PFX Cert Installation 
 $mypwd = Get-Credential -UserName 'Enter password below' -Message 'Enter password below' 
 $params = @{ 
-    FilePath = 'C:\inetpub\star.tavana.net.pfx' 
+    FilePath = 'C:\inetpub\certificate.pfx' 
     CertStoreLocation = 'Cert:\LocalMachine\My' 
     Password = $mypwd.Password 
 } 
